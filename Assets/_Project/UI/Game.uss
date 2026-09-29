@@ -252,6 +252,53 @@ Button.button:disabled {
     background-color: rgb(255, 194, 26);
 }
 
+/* ---------- Continue (simulated rewarded ad) ---------- */
+
+Button.button--ad {
+    background-image: url("Kenney/button_blue.png");
+    color: rgb(255, 255, 255);
+}
+
+.ad {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(12, 14, 20);
+}
+
+.ad__tag {
+    padding: 4px 24px;
+    border-radius: 12px;
+    font-size: 40px;
+    color: rgb(30, 34, 48);
+    background-color: rgb(200, 206, 222);
+}
+
+.ad__title {
+    margin-top: 24px;
+    font-size: 64px;
+}
+
+.ad__countdown {
+    margin-top: 32px;
+    font-size: 200px;
+    color: rgb(255, 194, 26);
+}
+
+.hud__milestone {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 38%;
+    font-size: 110px;
+    color: rgb(255, 194, 26);
+    text-shadow: 6px 6px 0 rgb(30, 34, 48);
+}
+
 /* ---------- Shop ---------- */
 
 .shop {

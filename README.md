@@ -19,6 +19,9 @@ Une tour infinie, deux côtés et un marteau : on tape à gauche ou à droite po
 | Génération | Départ sans danger, écart minimal garanti entre deux poutres (la tour est toujours jouable) et probabilité de danger qui croît avec la hauteur (`RandomBlockGenerator`). |
 | Pression | La barre se vide de plus en plus vite. Chaque coup rend une fraction de seconde (`TimerModel`). |
 | Progression | Pièces sur certains étages → boutique de destructeurs (ouvrier à la masse, maître du coup de pied sauté, robot à pinces, Kaze et sa boule d'énergie), sauvegarde persistante. |
+| Paliers | Tous les 50 étages, les façades changent de teinte (brique, verre, mousse, néon, nuit) avec un « ÉTAGE 50 ! », un jingle et une vibration : une récompense visible pour aller plus haut. |
+| Continuer | Une fois par partie, une pub récompensée (simulée, compte à rebours de 3 s) relance la partie : score et pièces gardés, 3 étages sécurisés, barre de temps rechargée mais difficulté conservée (`GameSession.TryContinue`). Le point de branchement du SDK de pub est isolé dans `GameController`. |
+| Son | Effets synthétisés par code au lancement (`GameAudio`) : coup, pièce, palier, mort, relance. Vibration sur mobile. |
 
 Contrôles : tap sur la moitié gauche ou droite de l'écran (multi-touch, pour jouer avec les deux pouces). Dans l'éditeur : clic, flèches ou A/D.
 
@@ -53,7 +56,7 @@ Choix de conception :
 
 ## Tests
 
-- **36 tests EditMode** (NUnit) sur le Core : mécanique de la tour, règles de génération (dont une partie simulée de 5 000 étages pour prouver qu'une tour est toujours jouable), timer, session de jeu, économie et boutique (y compris la réparation de sauvegardes corrompues ou obsolètes).
+- **38 tests EditMode** (NUnit) sur le Core : mécanique de la tour, règles de génération (dont une partie simulée de 5 000 étages pour prouver qu'une tour est toujours jouable), timer, session de jeu (y compris « continuer » : une seule fois par partie, étages sécurisés, score conservé), économie et boutique (y compris la réparation de sauvegardes corrompues ou obsolètes).
 - **Tests PlayMode de bout en bout** sur la vraie scène : clic sur l'UI et clavier simulé via `InputTestFixture`, du menu jusqu'au game over et à la sauvegarde du record. La sauvegarde réelle du joueur est sauvegardée puis restaurée autour de chaque test.
 - `GameFlowTests.CaptureScreenshots` régénère les captures ci-dessus (monde et UI Toolkit rendus en RenderTexture).
 
@@ -69,4 +72,4 @@ Unity -batchmode -projectPath . -runTests -testPlatform EditMode -testResults Lo
 
 ## Pistes d'évolution
 
-Sons et haptique, paliers de difficulté visuels (couleur de façade par tranche de 50 étages), missions quotidiennes, pubs récompensées pour « continuer », et analytics sur la durée des parties.
+Brancher un vrai SDK de pub (AppLovin MAX) à la place de la pub simulée, missions quotidiennes, et analytics sur la durée des parties et le taux d'utilisation de « continuer ».

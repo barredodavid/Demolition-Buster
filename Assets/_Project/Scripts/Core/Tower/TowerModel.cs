@@ -47,6 +47,16 @@ namespace DemolitionBuster.Core.Tower
             }
         }
 
+        /// <summary>Removes the hazards of the lowest <paramref name="levels"/> floors (coins are kept).</summary>
+        public void ClearHazards(int levels)
+        {
+            for (int level = 0; level < levels && level < _blocks.Length; level++)
+            {
+                int slot = (_baseSlot + level) % _blocks.Length;
+                _blocks[slot] = new Block(Side.None, _blocks[slot].CoinValue);
+            }
+        }
+
         /// <summary>The player strikes the base block from <paramref name="playerSide"/>.</summary>
         public HitResult Hit(Side playerSide)
         {

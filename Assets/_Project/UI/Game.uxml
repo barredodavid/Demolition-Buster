@@ -13,6 +13,7 @@
                 <ui:Label name="hud-coins" class="coin-counter__label" text="0" picking-mode="Ignore" />
             </ui:VisualElement>
             <ui:Label name="hud-hint" class="hud__hint" text="TAPE À GAUCHE OU À DROITE" picking-mode="Ignore" />
+            <ui:Label name="hud-milestone" class="hud__milestone hidden" text="ÉTAGE 50 !" picking-mode="Ignore" />
         </ui:VisualElement>
 
         <!-- MAIN MENU -->
@@ -45,8 +46,15 @@
                     <ui:VisualElement class="coin-icon" />
                     <ui:Label name="gameover-coins" class="coin-counter__label" text="+0" />
                 </ui:VisualElement>
+                <ui:Button name="gameover-continue" class="button button--ad" text="CONTINUER (PUB)" />
                 <ui:Button name="gameover-retry" class="button button--primary" text="REJOUER" />
                 <ui:Button name="gameover-menu" class="button" text="MENU" />
+            </ui:VisualElement>
+            <!-- Simulated rewarded ad: placeholder for an ad SDK (AppLovin MAX, ironSource...). -->
+            <ui:VisualElement name="gameover-ad" class="ad hidden">
+                <ui:Label class="ad__tag" text="PUB" />
+                <ui:Label class="ad__title" text="Vidéo récompensée" />
+                <ui:Label name="gameover-ad-countdown" class="ad__countdown" text="3" />
             </ui:VisualElement>
         </ui:VisualElement>
 

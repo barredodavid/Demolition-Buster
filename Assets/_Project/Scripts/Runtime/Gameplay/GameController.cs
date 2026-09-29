@@ -1,4 +1,5 @@
 using System.Collections;
+using DemolitionBuster.Audio;
 using DemolitionBuster.Config;
 using DemolitionBuster.Core;
 using DemolitionBuster.Core.Progression;
@@ -44,15 +45,26 @@ namespace DemolitionBuster.Gameplay
         [SerializeField] private float _hitShake = 0.06f;
         [SerializeField] private float _deathShake = 0.35f;
 
+        [Header("Continue")]
+        [Tooltip("Length of the simulated rewarded ad, in seconds.")]
+        [SerializeField] private int _adSeconds = 3;
+
         private GameSession _session;
         private PlayerProgress _progress;
         private ShopService _shop;
         private DestroyerDefinition _destroyer;
         private AppState _state;
+        private GameAudio _audio;
+        /// <summary>Coins of the current run already added to the save (a continued run can end twice).</summary>
+        private int _coinsBanked;
 
         private void Awake()
         {
             Application.targetFrameRate = 60;
+
+            // Added at runtime so the generated scene needs no rebuild.
+            _audio = GetComponent<GameAudio>();
+            if (_audio == null) _audio = gameObject.AddComponent<GameAudio>();
 
             _progress = new PlayerProgress(new PlayerPrefsSaveStorage());
             _shop = new ShopService(_progress, _catalog.Destroyers);
@@ -69,6 +81,7 @@ namespace DemolitionBuster.Gameplay
             _ui.Initialize();
             _ui.Menu.PlayClicked += StartRun;
             _ui.Menu.ShopClicked += OpenShop;
+            _ui.GameOver.ContinueClicked += ContinueRun;
             _ui.GameOver.RetryClicked += StartRun;
             _ui.GameOver.MenuClicked += OpenMenu;
             _ui.Shop.CloseClicked += OpenMenu;
@@ -115,6 +128,7 @@ namespace DemolitionBuster.Gameplay
         {
             ResetWorld();
             _state = AppState.Run;
+            _coinsBanked = 0;
             _ui.Hud.SetScore(0, animate: false);
             _ui.Hud.SetCoins(0);
             _ui.Hud.SetTime(_session.Timer.Normalized);
@@ -127,9 +141,11 @@ namespace DemolitionBuster.Gameplay
             _state = AppState.GameOver;
             _playerView.PlayDeath();
             _cameraRig.Shake(_deathShake, 0.4f);
+            _audio.PlayDeath();
 
             bool isNewRecord = _progress.SubmitScore(_session.Score);
-            _progress.AddCoins(_session.CoinsCollected);
+            _progress.AddCoins(_session.CoinsCollected - _coinsBanked);
+            _coinsBanked = _session.CoinsCollected;
 
             StartCoroutine(ShowGameOverAfterDelay(isNewRecord));
         }
@@ -137,8 +153,35 @@ namespace DemolitionBuster.Gameplay
         private IEnumerator ShowGameOverAfterDelay(bool isNewRecord)
         {
             yield return new WaitForSeconds(_config.GameOverDelay);
-            _ui.GameOver.SetResult(_session.DeathCause, _session.Score, _progress.BestScore, isNewRecord, _session.CoinsCollected);
+            _ui.GameOver.SetResult(_session.DeathCause, _session.Score, _progress.BestScore, isNewRecord, _session.CoinsCollected, _session.CanContinue);
             _ui.ShowOnly(_ui.GameOver);
+        }
+
+        private void ContinueRun()
+        {
+            if (_state != AppState.GameOver || !_session.CanContinue) return;
+            StartCoroutine(PlayRewardedAdThenContinue());
+        }
+
+        /// <summary>ponytail: fake ad countdown; plug the ad SDK rewarded callback (AppLovin MAX, ironSource...) here.</summary>
+        private IEnumerator PlayRewardedAdThenContinue()
+        {
+            for (int secondsLeft = _adSeconds; secondsLeft > 0; secondsLeft--)
+            {
+                _ui.GameOver.SetAd(secondsLeft);
+                yield return new WaitForSecondsRealtime(1f);
+            }
+            _ui.GameOver.SetAd(null);
+
+            _session.TryContinue();
+            _towerView.Render(_session.Tower);
+            _playerView.ResetTo(Side.Left);
+            _audio.PlayRevive();
+
+            _state = AppState.Run;
+            _ui.Hud.SetTime(_session.Timer.Normalized);
+            _ui.Hud.SetHintVisible(true);
+            _ui.ShowOnly(_ui.Hud);
         }
 
         private void ResetWorld()
@@ -167,6 +210,14 @@ namespace DemolitionBuster.Gameplay
                 _cameraRig.Shake(_hitShake, 0.08f);
                 _ui.Hud.SetScore(_session.Score, animate: true);
                 _ui.Hud.SetCoins(_session.CoinsCollected);
+
+                _audio.PlayHit();
+                if (result.DestroyedBlock.HasCoin) _audio.PlayCoin();
+                if (_session.Score % TowerView.FloorsPerTier == 0)
+                {
+                    _audio.PlayMilestone();
+                    _ui.Hud.ShowMilestone(_session.Score);
+                }
             }
 
             _ui.Hud.SetTime(_session.Timer.Normalized);

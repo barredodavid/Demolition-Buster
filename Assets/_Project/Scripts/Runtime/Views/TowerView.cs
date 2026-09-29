@@ -23,6 +23,16 @@ namespace DemolitionBuster.Views
         [SerializeField] private float _descentSharpness = 28f;
         [Tooltip("Floors alternate between these tints so the descent stays readable.")]
         [SerializeField] private Color[] _floorTints = { Color.white };
+        [Tooltip("Every FloorsPerTier floors the facades take the next tint: a visible reward for climbing.")]
+        [SerializeField] private Color[] _tierTints =
+        {
+            Color.white,
+            new Color(1f, 0.82f, 0.66f),  // brique
+            new Color(0.7f, 0.86f, 1f),   // verre
+            new Color(0.8f, 1f, 0.72f),   // mousse
+            new Color(1f, 0.74f, 0.88f),  // néon
+            new Color(0.82f, 0.76f, 1f),  // nuit
+        };
         [Tooltip("Facade variants, picked pseudo-randomly but stable per floor.")]
         [SerializeField] private Sprite[] _floorSprites = new Sprite[0];
 
@@ -109,7 +119,14 @@ namespace DemolitionBuster.Views
             }
         }
 
-        private Color TintForFloor(int floor) => _floorTints.Length == 0 ? Color.white : _floorTints[floor % _floorTints.Length];
+        public const int FloorsPerTier = 50;
+
+        private Color TintForFloor(int floor)
+        {
+            Color floorTint = _floorTints.Length == 0 ? Color.white : _floorTints[floor % _floorTints.Length];
+            Color tierTint = _tierTints.Length == 0 ? Color.white : _tierTints[(floor / FloorsPerTier) % _tierTints.Length];
+            return floorTint * tierTint;
+        }
 
         private Sprite SpriteForFloor(int floor)
         {

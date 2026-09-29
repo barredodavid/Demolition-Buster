@@ -34,6 +34,14 @@ namespace DemolitionBuster.Core
         public int Score { get; private set; }
         public int CoinsCollected { get; private set; }
 
+        /// <summary>A lost run can be resumed once (rewarded ad "Continue" in the Unity layer).</summary>
+        public bool CanContinue => State == SessionState.Over && !_hasContinued;
+
+        /// <summary>Floors cleared of hazards when continuing, so the player isn't killed again instantly.</summary>
+        public const int ContinueSafeFloors = 3;
+
+        private bool _hasContinued;
+
         public GameSession(TowerModel tower, TimerModel timer)
         {
             Tower = tower ?? throw new ArgumentNullException(nameof(tower));
@@ -49,6 +57,23 @@ namespace DemolitionBuster.Core
             CoinsCollected = 0;
             DeathCause = DeathCause.None;
             State = SessionState.Ready;
+            _hasContinued = false;
+        }
+
+        /// <summary>
+        /// Resumes a lost run: score and coins are kept, the floors near the player are made safe and the
+        /// time bar is refilled. The timer waits for the next tap, like at the start of a run.
+        /// </summary>
+        public bool TryContinue()
+        {
+            if (!CanContinue) return false;
+
+            _hasContinued = true;
+            Tower.ClearHazards(ContinueSafeFloors);
+            Timer.Revive();
+            DeathCause = DeathCause.None;
+            State = SessionState.Ready;
+            return true;
         }
 
         /// <summary>Processes a tap. Returns false (and ignores it) once the run is over.</summary>

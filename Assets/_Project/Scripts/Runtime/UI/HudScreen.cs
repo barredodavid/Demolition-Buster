@@ -11,6 +11,8 @@ namespace DemolitionBuster.UI
         private readonly Label _score;
         private readonly Label _coins;
         private readonly Label _hint;
+        private readonly Label _milestone;
+        private const long MilestoneMilliseconds = 1200;
 
         public HudScreen(VisualElement root) : base(root)
         {
@@ -18,6 +20,7 @@ namespace DemolitionBuster.UI
             _score = Require<Label>("hud-score");
             _coins = Require<Label>("hud-coins");
             _hint = Require<Label>("hud-hint");
+            _milestone = Require<Label>("hud-milestone");
         }
 
         public void SetTime(float normalized)
@@ -39,5 +42,13 @@ namespace DemolitionBuster.UI
         public void SetCoins(int coins) => _coins.text = coins.ToString();
 
         public void SetHintVisible(bool visible) => _hint.EnableInClassList("hidden", !visible);
+
+        /// <summary>Flashes "ÉTAGE N !" in the middle of the screen when a new facade tier is reached.</summary>
+        public void ShowMilestone(int floor)
+        {
+            _milestone.text = $"ÉTAGE {floor} !";
+            _milestone.RemoveFromClassList("hidden");
+            _milestone.schedule.Execute(() => _milestone.AddToClassList("hidden")).ExecuteLater(MilestoneMilliseconds);
+        }
     }
 }

@@ -34,6 +34,13 @@ namespace DemolitionBuster.Core.Timer
             IsRunning = false;
         }
 
+        /// <summary>Refills the bar to its starting level but keeps the difficulty (hit count) reached so far.</summary>
+        public void Revive()
+        {
+            Remaining = Clamp(_settings.startTime);
+            IsRunning = false;
+        }
+
         public void Start() => IsRunning = !IsExpired;
 
         public void Stop() => IsRunning = false;
