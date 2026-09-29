@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acb4b50fed9450146a9e866c9d6fca82, type: 3}
+  m_Name: DestroyerCatalog
+  m_EditorClassIdentifier: DemolitionBuster.Runtime::DemolitionBuster.Config.DestroyerCatalog
+  _destroyers:
+  - {fileID: 11400000, guid: 2b43ae9f59418564ba6e5009a3d63805, type: 2}
+  - {fileID: 11400000, guid: fce3ae4fb36124a498080e80341898eb, type: 2}
+  - {fileID: 11400000, guid: 7844cc7a15be12b4b83aa22e49814f5c, type: 2}
+  - {fileID: 11400000, guid: 3545ed975b1b1404394edbbfda5eade7, type: 2}

@@ -1,0 +1,364 @@
+/* Demolition Buster - construction site palette.
+   Reference resolution: 1080 x 1920 (see PanelSettings), sizes are in reference pixels. */
+
+/* ---------- Layout ---------- */
+
+.safe-area {
+    flex-grow: 1;
+    /* Kenney Future (CC0, Kenney UI Pack): inherited by every text element. */
+    -unity-font-definition: url("Kenney/KenneyFuture.ttf");
+}
+
+.screen {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.hidden {
+    display: none;
+}
+
+Label {
+    color: rgb(255, 255, 255);
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+}
+
+/* ---------- Coins ---------- */
+
+.coin-counter {
+    flex-direction: row;
+    align-items: center;
+}
+
+.coin-icon {
+    width: 56px;
+    height: 56px;
+    margin-right: 12px;
+    background-image: url("../Art/Sprites/Coin.png");
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.coin-counter__label {
+    font-size: 56px;
+    color: rgb(255, 213, 74);
+    text-shadow: 3px 3px 0 rgb(30, 34, 48);
+}
+
+/* ---------- HUD ---------- */
+
+.hud {
+    align-items: center;
+    padding: 48px 56px;
+}
+
+.timebar {
+    width: 100%;
+    height: 64px;
+    padding: 8px;
+    border-radius: 32px;
+    border-width: 6px;
+    border-color: rgb(30, 34, 48);
+    background-color: rgba(30, 34, 48, 0.8);
+}
+
+.timebar__fill {
+    height: 100%;
+    width: 50%;
+    border-radius: 20px;
+    background-color: rgb(255, 194, 26);
+}
+
+.timebar__fill--low {
+    background-color: rgb(232, 69, 60);
+}
+
+.hud__score {
+    margin-top: 48px;
+    font-size: 180px;
+    text-shadow: 6px 6px 0 rgb(30, 34, 48);
+    transition-property: scale;
+    transition-duration: 0.09s;
+    transition-timing-function: ease-out;
+}
+
+.hud__score--pop {
+    scale: 1.2 1.2;
+}
+
+.hud__coins {
+    position: absolute;
+    top: 140px;
+    right: 56px;
+}
+
+.hud__hint {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 12%;
+    font-size: 48px;
+    white-space: normal;
+    text-shadow: 3px 3px 0 rgb(30, 34, 48);
+}
+
+/* ---------- Menu ---------- */
+
+.menu {
+    justify-content: space-between;
+    padding: 48px 56px 120px 56px;
+}
+
+.menu__coins {
+    align-self: flex-end;
+}
+
+.title-block {
+    align-items: center;
+    margin-top: 40px;
+}
+
+.title {
+    font-size: 150px;
+    margin: 0;
+    padding: 0;
+    text-shadow: 8px 8px 0 rgb(30, 34, 48);
+}
+
+.title--accent {
+    margin-top: -30px;
+    font-size: 190px;
+    color: rgb(255, 194, 26);
+}
+
+.hazard-stripe {
+    width: 680px;
+    height: 36px;
+    margin-top: 16px;
+    border-radius: 8px;
+    background-image: url("../Art/Sprites/HazardStripe.png");
+}
+
+.menu__bottom {
+    align-items: center;
+}
+
+.stat {
+    font-size: 56px;
+    margin-bottom: 24px;
+    color: rgb(255, 255, 255);
+    text-shadow: 3px 3px 0 rgb(30, 34, 48);
+}
+
+/* ---------- Buttons ---------- */
+
+/* Kenney UI Pack buttons (CC0), 9-sliced so they stretch without distorting corners or the bottom depth. */
+Button.button {
+    width: 640px;
+    height: 150px;
+    margin: 14px 0;
+    padding: 0 24px 10px 24px;
+    border-width: 0;
+    border-radius: 0;
+    background-color: rgba(0, 0, 0, 0);
+    background-image: url("Kenney/button_grey.png");
+    -unity-slice-left: 14;
+    -unity-slice-right: 14;
+    -unity-slice-top: 14;
+    -unity-slice-bottom: 18;
+    color: rgb(52, 58, 78);
+    font-size: 58px;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    transition-property: scale;
+    transition-duration: 0.08s;
+}
+
+Button.button:hover {
+    background-color: rgba(0, 0, 0, 0);
+    -unity-background-image-tint-color: rgb(236, 238, 245);
+}
+
+Button.button:active {
+    scale: 0.94 0.94;
+    background-color: rgba(0, 0, 0, 0);
+    -unity-background-image-tint-color: rgb(220, 224, 235);
+}
+
+Button.button--primary {
+    background-image: url("Kenney/button_yellow.png");
+    color: rgb(92, 58, 0);
+}
+
+Button.button--large {
+    height: 180px;
+    font-size: 76px;
+}
+
+Button.button:disabled {
+    opacity: 1;
+    -unity-background-image-tint-color: rgb(150, 156, 172);
+    color: rgb(90, 96, 112);
+}
+
+/* ---------- Overlays (game over, shop) ---------- */
+
+.overlay {
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(16, 18, 26, 0.72);
+}
+
+.card {
+    width: 88%;
+    align-items: center;
+    padding: 64px 48px;
+    border-radius: 56px;
+    border-width: 8px;
+    border-color: rgb(255, 194, 26);
+    background-color: rgb(30, 34, 48);
+}
+
+.card__title {
+    font-size: 72px;
+    color: rgb(255, 194, 26);
+}
+
+.card__subtitle {
+    margin-top: 8px;
+    font-size: 44px;
+    color: rgb(200, 206, 222);
+}
+
+.card__score {
+    font-size: 220px;
+    margin: 8px 0;
+}
+
+.card__coins {
+    margin-bottom: 32px;
+}
+
+.badge {
+    padding: 8px 32px;
+    margin-bottom: 24px;
+    border-radius: 24px;
+    font-size: 44px;
+    color: rgb(30, 34, 48);
+    background-color: rgb(255, 194, 26);
+}
+
+/* ---------- Shop ---------- */
+
+.shop {
+    justify-content: flex-start;
+    padding: 56px 40px 80px 40px;
+}
+
+.shop__header {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+}
+
+.shop__title {
+    font-size: 96px;
+    color: rgb(255, 194, 26);
+    text-shadow: 6px 6px 0 rgb(16, 18, 26);
+}
+
+.shop__list {
+    width: 100%;
+    flex-grow: 1;
+    margin-bottom: 24px;
+}
+
+.shop-item {
+    flex-direction: row;
+    align-items: center;
+    padding: 24px;
+    margin-bottom: 24px;
+    border-radius: 40px;
+    border-width: 6px;
+    border-color: rgb(44, 50, 70);
+    background-color: rgb(30, 34, 48);
+    transition-property: translate, border-color;
+    transition-duration: 0.06s;
+}
+
+.shop-item--equipped {
+    border-color: rgb(255, 194, 26);
+}
+
+.shop-item--denied {
+    translate: 24px 0;
+    border-color: rgb(232, 69, 60);
+}
+
+.shop-item__preview {
+    width: 220px;
+    height: 180px;
+    margin-right: 24px;
+    border-radius: 28px;
+    background-color: rgb(120, 190, 235);
+}
+
+.shop-item__layer {
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    top: 8px;
+    bottom: 8px;
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.shop-item__info {
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+
+.shop-item__name {
+    font-size: 50px;
+    -unity-text-align: middle-left;
+    white-space: normal;
+}
+
+.shop-item__description {
+    margin-top: 8px;
+    font-size: 34px;
+    -unity-font-style: normal;
+    -unity-text-align: upper-left;
+    white-space: normal;
+    color: rgb(170, 178, 200);
+}
+
+Button.shop-item__action {
+    width: 250px;
+    height: 120px;
+    margin: 0 0 0 16px;
+}
+
+.shop-item__action-label {
+    font-size: 42px;
+    color: rgb(52, 58, 78);
+}
+
+.button--primary .shop-item__action-label {
+    color: rgb(92, 58, 0);
+}
+
+.shop-item__action:disabled .shop-item__action-label {
+    color: rgb(90, 96, 112);
+}
+
+.shop-item__action .coin-icon {
+    width: 44px;
+    height: 44px;
+    margin: 0 0 0 10px;
+}

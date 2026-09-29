@@ -1,0 +1,67 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="Game.uss" />
+    <ui:VisualElement name="safe-area" class="safe-area" picking-mode="Ignore">
+
+        <!-- HUD: purely informative, never intercepts taps (gameplay input is read separately). -->
+        <ui:VisualElement name="hud" class="screen hud hidden" picking-mode="Ignore">
+            <ui:VisualElement class="timebar" picking-mode="Ignore">
+                <ui:VisualElement name="timebar-fill" class="timebar__fill" picking-mode="Ignore" />
+            </ui:VisualElement>
+            <ui:Label name="hud-score" class="hud__score" text="0" picking-mode="Ignore" />
+            <ui:VisualElement class="coin-counter hud__coins" picking-mode="Ignore">
+                <ui:VisualElement class="coin-icon" picking-mode="Ignore" />
+                <ui:Label name="hud-coins" class="coin-counter__label" text="0" picking-mode="Ignore" />
+            </ui:VisualElement>
+            <ui:Label name="hud-hint" class="hud__hint" text="TAPE À GAUCHE OU À DROITE" picking-mode="Ignore" />
+        </ui:VisualElement>
+
+        <!-- MAIN MENU -->
+        <ui:VisualElement name="menu" class="screen menu hidden">
+            <ui:VisualElement class="coin-counter menu__coins" picking-mode="Ignore">
+                <ui:VisualElement class="coin-icon" picking-mode="Ignore" />
+                <ui:Label name="menu-coins" class="coin-counter__label" text="0" picking-mode="Ignore" />
+            </ui:VisualElement>
+            <ui:VisualElement class="title-block" picking-mode="Ignore">
+                <ui:Label class="title" text="DEMOLITION" picking-mode="Ignore" />
+                <ui:Label class="title title--accent" text="BUSTER" picking-mode="Ignore" />
+                <ui:VisualElement class="hazard-stripe" picking-mode="Ignore" />
+            </ui:VisualElement>
+            <ui:VisualElement class="menu__bottom">
+                <ui:Label name="menu-best" class="stat" text="RECORD  0" picking-mode="Ignore" />
+                <ui:Button name="menu-play" class="button button--primary button--large" text="JOUER" />
+                <ui:Button name="menu-shop" class="button" text="BOUTIQUE" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <!-- GAME OVER -->
+        <ui:VisualElement name="gameover" class="screen overlay hidden">
+            <ui:VisualElement class="card">
+                <ui:Label class="card__title" text="CHANTIER TERMINÉ" />
+                <ui:Label name="gameover-cause" class="card__subtitle" text="" />
+                <ui:Label name="gameover-score" class="card__score" text="0" />
+                <ui:Label name="gameover-record" class="badge hidden" text="NOUVEAU RECORD !" />
+                <ui:Label name="gameover-best" class="stat" text="RECORD  0" />
+                <ui:VisualElement class="coin-counter card__coins">
+                    <ui:VisualElement class="coin-icon" />
+                    <ui:Label name="gameover-coins" class="coin-counter__label" text="+0" />
+                </ui:VisualElement>
+                <ui:Button name="gameover-retry" class="button button--primary" text="REJOUER" />
+                <ui:Button name="gameover-menu" class="button" text="MENU" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <!-- SHOP -->
+        <ui:VisualElement name="shop" class="screen overlay shop hidden">
+            <ui:VisualElement class="shop__header">
+                <ui:Label class="shop__title" text="BOUTIQUE" />
+                <ui:VisualElement class="coin-counter">
+                    <ui:VisualElement class="coin-icon" />
+                    <ui:Label name="shop-coins" class="coin-counter__label" text="0" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:ScrollView name="shop-list" class="shop__list" mode="Vertical" horizontal-scroller-visibility="Hidden" />
+            <ui:Button name="shop-close" class="button" text="RETOUR" />
+        </ui:VisualElement>
+
+    </ui:VisualElement>
+</ui:UXML>
