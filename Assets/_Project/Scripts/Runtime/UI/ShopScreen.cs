@@ -87,20 +87,26 @@ namespace DemolitionBuster.UI
                 Element = new VisualElement();
                 Element.AddToClassList("shop-item");
 
+                // Name on its own full-width line: long names ("ROBOT DÉMOLISSEUR") never break mid-word.
+                var title = new Label(destroyer.DisplayName);
+                title.AddToClassList("shop-item__name");
+                Element.Add(title);
+
+                var body = new VisualElement();
+                body.AddToClassList("shop-item__body");
+                Element.Add(body);
+
                 var preview = new VisualElement();
                 preview.AddToClassList("shop-item__preview");
                 AddLayer(preview, destroyer.IdleFrame, Color.white);
-                Element.Add(preview);
+                body.Add(preview);
 
                 var info = new VisualElement();
                 info.AddToClassList("shop-item__info");
-                var title = new Label(destroyer.DisplayName);
-                title.AddToClassList("shop-item__name");
                 var description = new Label(destroyer.Description);
                 description.AddToClassList("shop-item__description");
-                info.Add(title);
                 info.Add(description);
-                Element.Add(info);
+                body.Add(info);
 
                 // Button content is built from children (label + coin icon) instead of Button.text.
                 ActionButton = new Button();
@@ -112,7 +118,7 @@ namespace DemolitionBuster.UI
                 _priceIcon.AddToClassList("coin-icon");
                 ActionButton.Add(_actionLabel);
                 ActionButton.Add(_priceIcon);
-                Element.Add(ActionButton);
+                body.Add(ActionButton);
             }
 
             public void Refresh(ShopItemState state, bool affordable)
