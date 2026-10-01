@@ -3,6 +3,10 @@
 Jeu d'arcade mobile hyper-casual en 2D portrait, développé avec **Unity 6 (6000.5)**.
 Une tour infinie, deux côtés et un marteau : on tape à gauche ou à droite pour détruire l'étage du bas, en esquivant les poutres qui descendent, avant que la barre de temps ne se vide.
 
+**Jouer dans le navigateur :** [davidbarredo.netlify.app](https://davidbarredo.netlify.app/#demolition)
+
+**Comment il a été fait :** j'ai conçu le jeu et décidé du ressenti et des itérations ; le code a été écrit avec l'IA (Claude).
+
 <p align="center">
   <img src="Docs/Screenshots/01_menu.png" width="200" />
   <img src="Docs/Screenshots/03_gameplay.png" width="200" />
